@@ -8,23 +8,47 @@
 import numpy as np
 import flask
 import io
+import tensorflow as tf
+from tensorflow.keras.models import load_model
+from tensorflow.keras import layers
+
+
 
 # initialize our Flask application and the Keras model
 app = flask.Flask(__name__)
-model = None
+#model = None
 
 def load_model():
-	global model
-	print("pretending to load the model...do do")
-	#model = ResNet50(weights="imagenet")
+	print("Loading model from saved weights")
+	local_model = tf.keras.Sequential()
+	local_model.add(layers.Dense(3, activation='relu'))
+	local_model.add(layers.Dense(3, activation='relu'))
+	local_model.add(layers.Dense(2, activation='softmax'))
+	training = np.genfromtxt('training.csv', delimiter=",")
+	labels = np.genfromtxt('labels.csv', delimiter=",")
+	local_model.compile(optimizer=tf.train.AdamOptimizer(0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+	local_model.fit(training, labels, epochs=0)
+	print("Finished loading model")
+	return local_model
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
-	data = {"success": False}
-
+	data = {"success":False}
 	if flask.request.method == "POST":
 		data["success"] = True
-
+		features = flask.request.json["features"]
+		local_model = tf.keras.Sequential()
+		local_model.add(layers.Dense(3, activation='relu'))
+		local_model.add(layers.Dense(3, activation='relu'))
+		local_model.add(layers.Dense(2, activation='softmax'))
+		training = np.genfromtxt('training.csv', delimiter=",")
+		labels = np.genfromtxt('labels.csv', delimiter=",")
+		local_model.compile(optimizer=tf.train.AdamOptimizer(0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+		local_model.fit(training, labels, epochs=0)
+		local_model.load_weights('pubg_model_weights.h5')
+		prediction = local_model.predict(np.array([features]))
+		print(prediction)
 	# return the data dictionary as a JSON response
 	return flask.jsonify(data)
 
@@ -32,5 +56,6 @@ def predict():
 # then start the server
 if __name__ == "__main__":
 	print("Flask starting server...")
-	load_model()
+	#global model
+	#model = load_model()
 	app.run()
