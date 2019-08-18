@@ -25,17 +25,26 @@ model, graph, sess = init()
 
 @app.route("/predict", methods=["POST"])
 def predict():
-	data = {"success":False}
 	if flask.request.method == "POST":
-		data["success"] = True
 		features = flask.request.json["features"]
-
 		with graph.as_default():
 			#make sure to use the same session we loaded the weights on the model with
 			set_session(sess)	
 			prediction = model.predict(np.array([features]))
 			return str(prediction)
-	return flask.jsonify(data)
+
+@app.route("/batch_predict", methods=["POST"])
+def batch_predict():
+	if flask.request.method == "POST":
+		features = flask.request.json["features"]
+		features_list = []
+		for feature in features:
+			features_list.append(features[feature])
+		with graph.as_default():
+			set_session(sess)
+			prediction = model.predict(np.array(features_list))
+			return str(prediction)
+
 
 # if this is the main thread of execution first load the model and
 # then start the server
