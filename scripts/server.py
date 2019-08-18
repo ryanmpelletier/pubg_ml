@@ -9,21 +9,19 @@ import numpy as np
 import flask
 import io
 import tensorflow as tf
-from tensorflow.keras import layers
 from tensorflow.keras.backend import set_session
 
 
 # initialize our Flask application and the Keras model
 app = flask.Flask(__name__)
 
+#load in the init() method basically so that we can initialize the model, graph, and session
 from load import *
 
+#this is probably not good, but we basically store all these globally
 global model, graph, sess
 
 model, graph, sess = init()
-
-
-
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -33,10 +31,10 @@ def predict():
 		features = flask.request.json["features"]
 
 		with graph.as_default():
+			#make sure to use the same session we loaded the weights on the model with
 			set_session(sess)	
 			prediction = model.predict(np.array([features]))
-			print(prediction)
-	# return the data dictionary as a JSON response
+			return str(prediction)
 	return flask.jsonify(data)
 
 # if this is the main thread of execution first load the model and
