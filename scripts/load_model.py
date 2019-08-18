@@ -31,10 +31,20 @@ model.fit(training, labels, epochs=0)
 #load the weights from the previously saved model
 model.load_weights('pubg_model_weights.h5')
 
-
+test = [1, 1, 1, 1, 1, 1, 1, 1]
+print(type(test))
 #now I can make predictions
-prediction = model.predict(np.array([(1, 1, 1, 1, 1, 1, 1, 1)]))
+prediction = model.predict(np.array([test]))
 
 print(prediction)
 
-
+def load_model():
+	model = tf.keras.Sequential()
+	model.add(layers.Dense(3, activation='relu'))
+	model.add(layers.Dense(3, activation='relu'))
+	model.add(layers.Dense(2, activation='softmax'))
+	training = np.genfromtxt('training.csv', delimiter=",")
+	labels = np.genfromtext('labels.csv', delimiter=",")
+	model.compile(optimizer=tf.train.AdamOptimizer(0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+	model.fit(training, labels, epochs=0)
+	model.load_weights('pubg_model_weights.h5')
