@@ -38,12 +38,19 @@ def batch_predict():
 	if flask.request.method == "POST":
 		features = flask.request.json["features"]
 		features_list = []
-		for feature in features:
-			features_list.append(features[feature])
+		response_list = []
+		for player_name in features:
+			features_list.append(features[player_name])
+			response_list.append({player_name:"dead"})
 		with graph.as_default():
 			set_session(sess)
-			prediction = model.predict(np.array(features_list))
-			return str(prediction)
+			predictions = model.predict(np.array(features_list))
+			#these predictions should be in the same order as as my request, so build a response
+			for i in range(len(predictions)):
+				if predictions[i][0] > predictions[i][1]:
+					for player in response_list[i]:
+						response_list[i][player] = "alive"
+			return str(response_list)
 
 
 # if this is the main thread of execution first load the model and
