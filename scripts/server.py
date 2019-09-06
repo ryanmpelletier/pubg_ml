@@ -11,7 +11,7 @@ import flask
 import io
 import tensorflow as tf
 from tensorflow.keras.backend import set_session
-
+from flask import jsonify
 
 # initialize our Flask application and the Keras model
 app = flask.Flask(__name__)
@@ -53,7 +53,7 @@ def batch_predict():
 				if predictions[i][0] > predictions[i][1]:
 					for player in response_list[i]:
 						response_list[i][player] = "alive"
-			return str(response_list)
+			return jsonify(response_list)
 
 
 # if this is the main thread of execution first load the model and
