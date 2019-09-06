@@ -5,3 +5,4 @@ pubg_telemetry_parser/
 /data
 /scripts/.bash_history
 /scripts/.keras
+*.pyc
