@@ -6,10 +6,10 @@ async function handleMessage({ data: { match, focusedPlayer } }) {
         const telemetryData = await res.json()
         // this will not be able to be localhost in the future
         const predictionRes = await fetch(`http://96.231.237.61/pubgml/prediction?telemetryUrl=${match.telemetryUrl}`)
-        const prediction = await predictionRes.json()
-        console.log(JSON.stringify(prediction))
+        const predictions = await predictionRes.json()
+        // console.log(JSON.stringify(predictions))
         const { state, globalState } = parseTelemetry(match, telemetryData, focusedPlayer)
-        postMessage({ success: true, state, globalState, rawTelemetry: telemetryData })
+        postMessage({ success: true, state, globalState, rawTelemetry: telemetryData, predictions })
     } catch (error) {
         postMessage({ success: false, error: error.message })
     }

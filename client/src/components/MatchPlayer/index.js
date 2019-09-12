@@ -198,8 +198,10 @@ class MatchPlayer extends React.Component {
     // -------------------------------------------------------------------------
 
     render() {
-        const { match, rawTelemetry, telemetry, rosters, globalState } = this.props
+        const { match, rawTelemetry, telemetry, rosters, globalState, predictions } = this.props
         const { mapSize, options, setOption, prevPlayerName } = this.state
+
+        console.log('PREDICTIONS', JSON.stringify(predictions))
 
         return (
             <Options.Context.Provider value={{ options, setOption }}>
@@ -259,12 +261,14 @@ class MatchPlayer extends React.Component {
                                 />
                             </RosterContainer>
                             <PredictionContainer mapSize={mapSize}>
-                                <PredictionHeader>Predictions</PredictionHeader>
+                                {/* eslint-disable-next-line max-len */}
+                                <PredictionHeader>Predictions: {(100 * (predictions.correct / (predictions.correct + predictions.incorrect))).toFixed(2)}%</PredictionHeader>
                                 <Prediction
                                     match={match}
                                     telemetry={currentTelemetry}
                                     rosters={rosters}
                                     marks={this.marks}
+                                    predictions={predictions}
                                 />
                             </PredictionContainer>
                         </MatchContainer>

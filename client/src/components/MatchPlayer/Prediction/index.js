@@ -53,7 +53,16 @@ const GamePhasePredictions = styled.div`
     text-align: right;
 `
 
-const Prediction = ({ match, telemetry, marks, rosters }) => {
+const Prediction = ({ match, telemetry, marks, rosters, predictions }) => {
+    // put predictions into a map
+    const predictionLookup = predictions.playerPredictions.reduce((predictionMap, playerPrediction) => {
+        // eslint-disable-next-line max-len
+        predictionMap[playerPrediction.name] = { prediction: playerPrediction.prediction, correct: playerPrediction.correct }
+        return predictionMap
+    }, {})
+
+    console.log('LOOKUP', JSON.stringify(predictionLookup))
+
     return (
         <Options.Context.Consumer>
             {({ options }) => rosters.map(r => {
@@ -73,7 +82,12 @@ const Prediction = ({ match, telemetry, marks, rosters }) => {
                                     }}
                                 >
                                     <PlayerName>{p.name}</PlayerName>
-                                    <GamePhasePredictions>NA</GamePhasePredictions>
+                                    { playerName in predictionLookup
+                                        // eslint-disable-next-line max-len
+                                        ? <GamePhasePredictions>{predictionLookup[playerName].prediction ? 'live' : 'die'}({predictionLookup[playerName].correct ? 't' : 'f'})</GamePhasePredictions>
+                                        : <GamePhasePredictions>NA</GamePhasePredictions>
+                                    }
+
                                 </PlayerItem>
                             )
                         })}

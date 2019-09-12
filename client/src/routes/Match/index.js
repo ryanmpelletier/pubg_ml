@@ -19,6 +19,7 @@ class Match extends React.Component {
     state = {
         rawTelemetry: null,
         telemetry: null,
+        predictions: null,
         telemetryLoaded: false,
         telemetryError: false,
         rosters: null,
@@ -59,7 +60,7 @@ class Match extends React.Component {
         this.telemetryWorker = new TelemetryWorker()
 
         this.telemetryWorker.addEventListener('message', ({ data }) => {
-            const { success, error, state, globalState, rawTelemetry } = data
+            const { success, error, state, globalState, rawTelemetry, predictions } = data
 
             if (!success) {
                 console.error(`Error loading telemetry: ${error}`)
@@ -80,6 +81,7 @@ class Match extends React.Component {
                 telemetry,
                 telemetryLoaded: true,
                 rosters: telemetry.finalRoster(params.playerName),
+                predictions,
                 globalState,
             }))
         })
@@ -103,7 +105,8 @@ class Match extends React.Component {
 
     render() {
         const { data: { loading, error, match }, match: { params } } = this.props
-        const { telemetry, rawTelemetry, telemetryLoaded, telemetryError, rosters, globalState } = this.state
+        // eslint-disable-next-line max-len
+        const { telemetry, rawTelemetry, telemetryLoaded, telemetryError, rosters, globalState, predictions } = this.state
 
         let content
 
@@ -123,6 +126,7 @@ class Match extends React.Component {
                 rosters={rosters}
                 globalState={globalState}
                 playerName={params.playerName}
+                predictions={predictions}
             />
         }
 
