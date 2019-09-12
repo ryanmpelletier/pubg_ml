@@ -6,6 +6,8 @@ function linearInterpolation(lowerVal, upperVal, span, idx) {
     return lowerVal + (yStep * idx)
 }
 
+// so this is an object that get's given a state, which I assume is parsed telemetry
+// then it exports methods used to get data from it?
 export default function Telemetry(state) {
     const getLocation = (interval, playerName, playerLocation) => {
         // There's no data point to the right, so we just end up with the point to the left

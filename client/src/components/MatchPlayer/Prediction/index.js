@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Tooltip from '../../../components/Tooltip'
-import Loadout from './Loadout.js'
 import * as Options from '../Options.js'
 
 const getRosterColor = ({ colors }, marks, player) => {
@@ -51,7 +49,7 @@ const PlayerName = styled.div`
     text-overflow: ellipsis;
 `
 
-const PlayerDatapoint = styled.div`
+const GamePhasePredictions = styled.div`
     text-align: right;
 `
 
@@ -63,7 +61,6 @@ const Prediction = ({ match, telemetry, marks, rosters }) => {
                     <TeamGroup key={`roster-${r[0]}`}>
                         {r.map(playerName => {
                             const p = telemetry.players[playerName]
-
                             return (
                                 <PlayerItem
                                     key={p.name}
@@ -75,17 +72,8 @@ const Prediction = ({ match, telemetry, marks, rosters }) => {
                                         textDecoration: marks.isPlayerTracked(p.name) ? 'underline' : '',
                                     }}
                                 >
-                                    <Tooltip
-                                        arrow
-                                        placement="left"
-                                        duration={0}
-                                        theme="pubgsh"
-                                        html={<Loadout items={p.items} />}
-                                    >
-                                        <PlayerName>{p.name}</PlayerName>
-                                    </Tooltip>
-                                    <PlayerDatapoint>{p.kills}</PlayerDatapoint>
-                                    <PlayerDatapoint>{Math.round(p.damageDealt)}</PlayerDatapoint>
+                                    <PlayerName>{p.name}</PlayerName>
+                                    <GamePhasePredictions>NA</GamePhasePredictions>
                                 </PlayerItem>
                             )
                         })}

@@ -45,6 +45,7 @@ class Match extends React.Component {
         this.cancelTelemetry()
     }
 
+    // an async method you can call
     loadTelemetry = async () => {
         this.cancelTelemetry()
 
@@ -54,6 +55,7 @@ class Match extends React.Component {
 
         this.setState({ telemetry: null, telemetryLoaded: false, telemetryError: false })
 
+        // I want to make TelemetryWorker give back the predictions in some object
         this.telemetryWorker = new TelemetryWorker()
 
         this.telemetryWorker.addEventListener('message', ({ data }) => {
@@ -71,6 +73,8 @@ class Match extends React.Component {
 
             const telemetry = Telemetry(state)
 
+            // eslint-disable-next-line max-len
+            // I'm pretty sure I want to add either a property or a state variable here which shows my data (or just something on the roster?
             this.setState(prevState => ({
                 rawTelemetry,
                 telemetry,

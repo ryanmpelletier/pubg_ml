@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import * as Options from './Options.js'
 import Map from './Map/index.js'
 import Roster from './Roster/index.js'
+import Prediction from './Prediction/index.js'
 import TimeTracker from './Time/TimeTracker.js'
 import TimeSlider from './Time/TimeSlider.js'
 import AutoplayControls from './Time/AutoplayControls.js'
@@ -51,6 +52,19 @@ const RosterContainer = styled.div`
     }
 `
 
+const PredictionContainer = styled.div`
+    grid-column: 3;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: ${props => props.mapSize + 48}px;
+    padding-right: 10px;
+
+    @media (max-width: 700px) {
+        grid-column: 1;
+        grid-row: 3;
+    }
+`
+
 const MatchHeader = styled.div`
     display: grid;
     grid-template-columns: max-content 1fr max-content;
@@ -65,6 +79,12 @@ const MatchHeader = styled.div`
 `
 
 const RosterHeader = styled.div`
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 400;
+`
+
+const PredictionHeader = styled.div`
     text-align: center;
     font-size: 1.1rem;
     font-weight: 400;
@@ -238,6 +258,15 @@ class MatchPlayer extends React.Component {
                                     marks={this.marks}
                                 />
                             </RosterContainer>
+                            <PredictionContainer mapSize={mapSize}>
+                                <PredictionHeader>Predictions</PredictionHeader>
+                                <Prediction
+                                    match={match}
+                                    telemetry={currentTelemetry}
+                                    rosters={rosters}
+                                    marks={this.marks}
+                                />
+                            </PredictionContainer>
                         </MatchContainer>
                     }
                 />
