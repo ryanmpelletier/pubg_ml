@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import * as Options from './Options.js'
 import Map from './Map/index.js'
 import Roster from './Roster/index.js'
-import Prediction from './Prediction/index.js'
 import TimeTracker from './Time/TimeTracker.js'
 import TimeSlider from './Time/TimeSlider.js'
 import AutoplayControls from './Time/AutoplayControls.js'
@@ -44,24 +43,12 @@ const RosterContainer = styled.div`
     overflow-y: scroll;
     overflow-x: hidden;
     height: ${props => props.mapSize + 48}px;
+    width: ${props => props.mapSize / 2.5}px;
     padding-right: 10px;
 
     @media (max-width: 700px) {
         grid-column: 1;
         grid-row: 2;
-    }
-`
-
-const PredictionContainer = styled.div`
-    grid-column: 3;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height: ${props => props.mapSize + 48}px;
-    padding-right: 10px;
-
-    @media (max-width: 700px) {
-        grid-column: 1;
-        grid-row: 3;
     }
 `
 
@@ -84,11 +71,6 @@ const RosterHeader = styled.div`
     font-weight: 400;
 `
 
-const PredictionHeader = styled.div`
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: 400;
-`
 
 class MatchPlayer extends React.Component {
     constructor(props) {
@@ -201,8 +183,6 @@ class MatchPlayer extends React.Component {
         const { match, rawTelemetry, telemetry, rosters, globalState, predictions } = this.props
         const { mapSize, options, setOption, prevPlayerName } = this.state
 
-        console.log('PREDICTIONS', JSON.stringify(predictions))
-
         return (
             <Options.Context.Provider value={{ options, setOption }}>
                 <TimeTracker
@@ -252,25 +232,16 @@ class MatchPlayer extends React.Component {
                                 />
                             </MapContainer>
                             <RosterContainer mapSize={mapSize}>
-                                <RosterHeader>Name / Kills / Damage</RosterHeader>
-                                <Roster
-                                    match={match}
-                                    telemetry={currentTelemetry}
-                                    rosters={rosters}
-                                    marks={this.marks}
-                                />
-                            </RosterContainer>
-                            <PredictionContainer mapSize={mapSize}>
                                 {/* eslint-disable-next-line max-len */}
-                                <PredictionHeader>Predictions: {(100 * (predictions.correct / (predictions.correct + predictions.incorrect))).toFixed(2)}%</PredictionHeader>
-                                <Prediction
+                                <RosterHeader>Name / Kills / Damage / Predictions: {(100 * (predictions.correct / (predictions.correct + predictions.incorrect))).toFixed(2)}%</RosterHeader>
+                                <Roster
                                     match={match}
                                     telemetry={currentTelemetry}
                                     rosters={rosters}
                                     marks={this.marks}
                                     predictions={predictions}
                                 />
-                            </PredictionContainer>
+                            </RosterContainer>
                         </MatchContainer>
                     }
                 />

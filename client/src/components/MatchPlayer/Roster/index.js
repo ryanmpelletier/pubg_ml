@@ -35,7 +35,7 @@ const PlayerItem = styled.li`
     overflow: hidden;
     cursor: pointer;
     display: grid;
-    grid-template-columns: 1fr 15px 25px;
+    grid-template-columns: 1fr 15px 25px 50px;
     grid-column-gap: 5px;
 
     i {
@@ -55,7 +55,15 @@ const PlayerDatapoint = styled.div`
     text-align: right;
 `
 
-const Prediction = ({ match, telemetry, marks, rosters }) => {
+const Prediction = ({ match, telemetry, marks, rosters, predictions }) => {
+
+    // put predictions into a map
+    const predictionLookup = predictions.playerPredictions.reduce((predictionMap, playerPrediction) => {
+        // eslint-disable-next-line max-len
+        predictionMap[playerPrediction.name] = { prediction: playerPrediction.prediction, correct: playerPrediction.correct }
+        return predictionMap
+    }, {})
+
     return (
         <Options.Context.Consumer>
             {({ options }) => rosters.map(r => {
@@ -86,6 +94,11 @@ const Prediction = ({ match, telemetry, marks, rosters }) => {
                                     </Tooltip>
                                     <PlayerDatapoint>{p.kills}</PlayerDatapoint>
                                     <PlayerDatapoint>{Math.round(p.damageDealt)}</PlayerDatapoint>
+                                    { playerName in predictionLookup
+                                        // eslint-disable-next-line max-len
+                                        ? <PlayerDatapoint>{predictionLookup[playerName].prediction ? 'live' : 'die'}({predictionLookup[playerName].correct ? 't' : 'f'})</PlayerDatapoint>
+                                        : <PlayerDatapoint>NA</PlayerDatapoint>
+                                    }
                                 </PlayerItem>
                             )
                         })}
