@@ -4,6 +4,22 @@ import Tooltip from '../../../components/Tooltip'
 import Loadout from './Loadout.js'
 import * as Options from '../Options.js'
 
+const importAll = req => {
+    return req.keys().reduce((prev, r) => {
+        // Split by directory and then reverse to get the filename
+        const [itemId] = r.split('/').reverse()
+
+        // Remove the extension from the file name.
+        const key = itemId.substr(0, itemId.length - 4)
+
+        // Require the file and assign it to the itemId property
+        return {
+            ...prev,
+            [key]: req(r),
+        }
+    }, {})
+}
+
 const getRosterColor = ({ colors }, marks, player) => {
     const dead = player.status === 'dead'
     const knocked = player.status !== 'dead' && player.health === 0
@@ -18,6 +34,17 @@ const getRosterColor = ({ colors }, marks, player) => {
 
     return dead ? colors.roster.dead : colors.roster.enemy
 }
+const images = importAll(require.context('../../../assets/prediction', true, /.png$/))
+
+const PredictionIcon = styled.img`
+    max-height: 15px;
+    max-width: 15px;
+    width: auto;
+    height: auto;
+    display: inline-block;
+    justify-self: center;
+    background-color: ${props => props.correct ? 'green' : 'red'};
+`
 
 const TeamGroup = styled.ul`
     list-style-type: none;
@@ -35,7 +62,7 @@ const PlayerItem = styled.li`
     overflow: hidden;
     cursor: pointer;
     display: grid;
-    grid-template-columns: 1fr 15px 25px 50px;
+    grid-template-columns: 1fr 15px 25px 20px 20px 20px 20px 20px 20px 20px 20px;
     grid-column-gap: 5px;
 
     i {
@@ -56,14 +83,6 @@ const PlayerDatapoint = styled.div`
 `
 
 const Prediction = ({ match, telemetry, marks, rosters, predictions }) => {
-
-    // put predictions into a map
-    const predictionLookup = predictions.playerPredictions.reduce((predictionMap, playerPrediction) => {
-        // eslint-disable-next-line max-len
-        predictionMap[playerPrediction.name] = { prediction: playerPrediction.prediction, correct: playerPrediction.correct }
-        return predictionMap
-    }, {})
-
     return (
         <Options.Context.Consumer>
             {({ options }) => rosters.map(r => {
@@ -71,7 +90,10 @@ const Prediction = ({ match, telemetry, marks, rosters, predictions }) => {
                     <TeamGroup key={`roster-${r[0]}`}>
                         {r.map(playerName => {
                             const p = telemetry.players[playerName]
-
+                            // eslint-disable-next-line max-len
+                            const playerPredictions = predictions.playerPredictions[playerName] ? predictions.playerPredictions[playerName].sort((a, b) => {
+                                return a.gamePhase - b.gamePhase
+                            }) : 'NA'
                             return (
                                 <PlayerItem
                                     key={p.name}
@@ -94,11 +116,17 @@ const Prediction = ({ match, telemetry, marks, rosters, predictions }) => {
                                     </Tooltip>
                                     <PlayerDatapoint>{p.kills}</PlayerDatapoint>
                                     <PlayerDatapoint>{Math.round(p.damageDealt)}</PlayerDatapoint>
-                                    { playerName in predictionLookup
+                                    { playerPredictions === 'NA' ? 'NA' :
+                                        playerPredictions.map(playerPrediction => (
                                         // eslint-disable-next-line max-len
-                                        ? <PlayerDatapoint>{predictionLookup[playerName].prediction ? 'live' : 'die'}({predictionLookup[playerName].correct ? 't' : 'f'})</PlayerDatapoint>
-                                        : <PlayerDatapoint>NA</PlayerDatapoint>
-                                    }
+                                            <PlayerDatapoint>{
+                                                playerPrediction.prediction
+                                                    // eslint-disable-next-line max-len
+                                                    ? <PredictionIcon src={images['life']} correct={playerPrediction.correct} />
+                                                    // eslint-disable-next-line max-len
+                                                    : <PredictionIcon src={images['death']} correct={playerPrediction.correct} />
+                                            }</PlayerDatapoint>
+                                        ))}
                                 </PlayerItem>
                             )
                         })}

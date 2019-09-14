@@ -43,7 +43,7 @@ const RosterContainer = styled.div`
     overflow-y: scroll;
     overflow-x: hidden;
     height: ${props => props.mapSize + 48}px;
-    width: ${props => props.mapSize / 2.5}px;
+    width: ${props => props.mapSize / 1.5}px;
     padding-right: 10px;
 
     @media (max-width: 700px) {
@@ -182,6 +182,8 @@ class MatchPlayer extends React.Component {
     render() {
         const { match, rawTelemetry, telemetry, rosters, globalState, predictions } = this.props
         const { mapSize, options, setOption, prevPlayerName } = this.state
+
+        console.log(JSON.stringify(predictions));
 
         return (
             <Options.Context.Provider value={{ options, setOption }}>
