@@ -44,9 +44,8 @@ const PredictionIcon = styled.img`
     display: inline-block;
     justify-self: center;
     filter: ${props => !props.correct ? 'brightness(0) saturate(100%) invert(60%) sepia(63%) saturate(5285%) hue-rotate(328deg) brightness(88%) contrast(120%);' :
-    'brightness(0) saturate(100%) invert(66%) sepia(87%) saturate(380%) hue-rotate(60deg) brightness(101%) contrast(104%);'}
+    'brightness(0) saturate(100%) invert(33%) sepia(63%) saturate(503%) hue-rotate(85deg) brightness(92%) contrast(87%);'}
 `
-
 const TeamGroup = styled.ul`
     list-style-type: none;
     border: 1px solid #ddd;
