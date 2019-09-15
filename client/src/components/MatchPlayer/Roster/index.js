@@ -43,7 +43,8 @@ const PredictionIcon = styled.img`
     height: auto;
     display: inline-block;
     justify-self: center;
-    background-color: ${props => props.correct ? 'green' : 'red'};
+    filter: ${props => !props.correct ? 'brightness(0) saturate(100%) invert(60%) sepia(63%) saturate(5285%) hue-rotate(328deg) brightness(88%) contrast(120%);' :
+    'brightness(0) saturate(100%) invert(66%) sepia(87%) saturate(380%) hue-rotate(60deg) brightness(101%) contrast(104%);'}
 `
 
 const TeamGroup = styled.ul`
@@ -82,6 +83,7 @@ const PlayerDatapoint = styled.div`
     text-align: right;
 `
 
+
 const Prediction = ({ match, telemetry, marks, rosters, predictions }) => {
     return (
         <Options.Context.Consumer>
@@ -116,16 +118,18 @@ const Prediction = ({ match, telemetry, marks, rosters, predictions }) => {
                                     </Tooltip>
                                     <PlayerDatapoint>{p.kills}</PlayerDatapoint>
                                     <PlayerDatapoint>{Math.round(p.damageDealt)}</PlayerDatapoint>
-                                    { playerPredictions === 'NA' ? 'NA' :
+                                    { playerPredictions === 'NA' ? '/' :
                                         playerPredictions.map(playerPrediction => (
                                         // eslint-disable-next-line max-len
-                                            <PlayerDatapoint>{
-                                                playerPrediction.prediction
+                                            <PlayerDatapoint>
+                                                {
+                                                    playerPrediction.prediction
                                                     // eslint-disable-next-line max-len
-                                                    ? <PredictionIcon src={images['life']} correct={playerPrediction.correct} />
+                                                        ? <PredictionIcon src={images['life']} correct={playerPrediction.correct} />
                                                     // eslint-disable-next-line max-len
-                                                    : <PredictionIcon src={images['death']} correct={playerPrediction.correct} />
-                                            }</PlayerDatapoint>
+                                                        : <PredictionIcon src={images['death']} correct={playerPrediction.correct} />
+                                                }
+                                            </PlayerDatapoint>
                                         ))}
                                 </PlayerItem>
                             )
