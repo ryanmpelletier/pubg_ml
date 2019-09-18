@@ -4,10 +4,8 @@ async function handleMessage({ data: { match, focusedPlayer } }) {
     try {
         const res = await fetch(match.telemetryUrl)
         const telemetryData = await res.json()
-        // this will not be able to be localhost in the future
-        const predictionRes = await fetch(`http://96.231.237.61/pubgml/prediction?telemetryUrl=${match.telemetryUrl}`)
+        const predictionRes = await fetch(`http://pubgmachinelearning.com/pubgml/prediction?telemetryUrl=${match.telemetryUrl}`)
         const predictions = await predictionRes.json()
-        // console.log(JSON.stringify(predictions))
         const { state, globalState } = parseTelemetry(match, telemetryData, focusedPlayer)
         postMessage({ success: true, state, globalState, rawTelemetry: telemetryData, predictions })
     } catch (error) {
