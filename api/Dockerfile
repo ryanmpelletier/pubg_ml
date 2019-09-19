@@ -18,3 +18,5 @@ ADD . ./
 RUN yarn run build
 
 CMD ["node", "dist/app.js"]
+
+LABEL maintainer="ryanmatthewpelletier@gmail.com"

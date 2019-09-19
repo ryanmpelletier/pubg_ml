@@ -16,5 +16,6 @@ RUN apk del python git make gcc g++
 WORKDIR /app
 ADD . ./
 RUN yarn run build
+RUN yarn global add serve
 
-RUN tar -cf build.tar build
+ENTRYPOINT ["serve", "-l", "3000","-s","build/"]
