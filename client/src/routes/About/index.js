@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 
 export default () =>
     <div>
-        <DocumentTitle title="About | pubg.sh" />
+        <DocumentTitle title="About | pubgmachinelearning.com" />
         <Header>
             About
         </Header>

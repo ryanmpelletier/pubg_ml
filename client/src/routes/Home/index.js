@@ -113,7 +113,7 @@ class Home extends React.Component {
 
         return (
             <CenteredContainer>
-                <DocumentTitle title="pubg.sh: 2D Match Replays" />
+                <DocumentTitle title="pubgmachinelearning" />
                 <StyledForm onSubmit={this.search}>
                     <StyledDropdown value={shardId} options={SHARDS} onChange={this.handleDropdownChange} />
                     <NameInput
