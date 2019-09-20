@@ -107,7 +107,7 @@ class TopMenu extends React.Component {
                 {({ favoritePlayers }) => (
                     <TopMenuContainer>
                         <div>
-                            <HomeLink to="/">pubg.<span>sh</span></HomeLink>
+                            <HomeLink to="/">pubgmachinelearning.<span>com</span></HomeLink>
                             <PlayerLinks>{createPlayerLinks(favoritePlayers)}</PlayerLinks>
                         </div>
                         <RightLinks>
