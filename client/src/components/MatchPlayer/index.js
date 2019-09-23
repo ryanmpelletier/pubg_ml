@@ -21,7 +21,6 @@ const MatchContainer = styled.div`
     grid-column-gap: 10px;
     border: 0px solid #eee;
     overflow: visible;
-    margin: 0 auto;
     max-width: calc(100vh + 10px);
 
     @media (max-width: 700px) {
