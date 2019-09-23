@@ -182,8 +182,6 @@ class MatchPlayer extends React.Component {
         const { match, rawTelemetry, telemetry, rosters, globalState, predictions } = this.props
         const { mapSize, options, setOption, prevPlayerName } = this.state
 
-        console.log(JSON.stringify(predictions));
-
         return (
             <Options.Context.Provider value={{ options, setOption }}>
                 <TimeTracker
@@ -224,6 +222,7 @@ class MatchPlayer extends React.Component {
                                     marks={this.marks}
                                     msSinceEpoch={msSinceEpoch}
                                     options={options}
+                                    predictions={predictions}
                                 />
                                 <HelpModal mapSize={mapSize} />
                                 <DownloadButton

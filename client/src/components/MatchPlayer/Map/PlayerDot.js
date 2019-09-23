@@ -2,6 +2,8 @@ import React from 'react'
 import { clamp } from 'lodash'
 import { Arc, Circle, Group, Text, Label, Tag } from 'react-konva'
 import { toScale } from '../../../lib/canvas-math.js'
+import PlayerPredictionIcon from './PlayerPredictionIcon'
+
 
 const getBasePlayerColor = ({ colors }, marks, player) => {
     if (marks.focusedPlayer() === player.name) {
@@ -42,6 +44,8 @@ const getStatusColor = ({ colors }, marks, player) => {
     return `${base}B0`
 }
 
+// TODO: probably add a PlayerPredictionImage here as a component
+
 const PlayerLabel = ({ visible, player, strokeColor }) => {
     if (!visible) return null
 
@@ -68,7 +72,8 @@ const PlayerLabel = ({ visible, player, strokeColor }) => {
     )
 }
 
-const PlayerDot = ({ options, player, pubgMapSize, mapSize, marks, mapScale, showName }) => {
+const PlayerDot = ({ options, player, pubgMapSize, mapSize, marks,
+    mapScale, showName, predictions }) => {
     const diameter = marks.isPlayerHovered(player.name) ? 11 : 8
     const scaledDiameter = diameter * clamp(mapScale / 1.4, 1, 1.3)
     const health = player.health / 100
@@ -110,12 +115,20 @@ const PlayerDot = ({ options, player, pubgMapSize, mapSize, marks, mapScale, sho
                 stroke="#000000"
                 strokeWidth={0.75}
             />
+
             <Arc
                 fill={getPlayerColor(options, marks, player)}
                 innerRadius={0}
                 outerRadius={scaledDiameter / 2}
                 angle={(360 * health)}
                 {...mouseEvents}
+            />
+            <PlayerPredictionIcon
+                pubgMapSize={pubgMapSize}
+                mapSize={mapSize}
+                mapScale={mapScale}
+                playerPredictions={predictions}
+                player={player}
             />
             <PlayerLabel
                 player={player}

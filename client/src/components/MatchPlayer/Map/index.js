@@ -125,7 +125,8 @@ class Map extends React.Component {
     }
 
     render() {
-        const { match: { mapName }, telemetry, mapSize, marks, msSinceEpoch, options } = this.props
+        const { match: { mapName }, telemetry, mapSize, marks,
+            msSinceEpoch, options, predictions } = this.props
         const { mapScale, offsetX, offsetY } = this.state
         const scale = { x: mapScale, y: mapScale }
 
@@ -193,6 +194,7 @@ class Map extends React.Component {
                             <PlayerDot
                                 options={options}
                                 player={player}
+                                predictions={predictions.playerPredictions[player.name]}
                                 mapSize={mapSize}
                                 pubgMapSize={pubgMapSize}
                                 mapScale={mapScale}
