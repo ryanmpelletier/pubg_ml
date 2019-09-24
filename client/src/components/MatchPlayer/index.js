@@ -9,7 +9,6 @@ import TimeSlider from './Time/TimeSlider.js'
 import AutoplayControls from './Time/AutoplayControls.js'
 import MatchInfo from './MatchInfo.js'
 import HelpModal from './HelpModal.js'
-import DownloadButton from './DownloadButton.js'
 
 // -----------------------------------------------------------------------------
 // Styled Components -----------------------------------------------------------
@@ -225,11 +224,6 @@ class MatchPlayer extends React.Component {
                                     predictions={predictions}
                                 />
                                 <HelpModal mapSize={mapSize} />
-                                <DownloadButton
-                                    match={match}
-                                    playerName={prevPlayerName}
-                                    rawTelemetry={rawTelemetry}
-                                />
                             </MapContainer>
                             <RosterContainer mapSize={mapSize}>
                                 {/* eslint-disable-next-line max-len */}

@@ -9,6 +9,7 @@ const blankIntervalState = () => ({
     bluezone: null,
     redzone: null,
     safezone: null,
+    gamePhase: null,
     tracers: [],
     carePackages: [],
 })
@@ -92,7 +93,7 @@ export default function parseTelemetry(matchData, telemetry, focusedPlayerName) 
 
     { // --- Step One: Iterate through all telemetry data and store known points
         console.time('Telemetry-eventParsing')
-
+        let gamePhase = 0.0
         let matchStarted = false
         let curStateInterval = 0
         telemetry.forEach((d, i) => {
@@ -112,6 +113,17 @@ export default function parseTelemetry(matchData, telemetry, focusedPlayerName) 
                 state[curStateInterval] = curState
                 curState = blankIntervalState()
                 curStateInterval = currentInterval
+            }
+
+            if (get(d, 'common.isGame')) {
+                const eventGamePhase = d.common.isGame
+                if (eventGamePhase == null) {
+                    console.log('I was null', JSON.stringify(d))
+                }
+                curState.gamePhase = eventGamePhase
+                gamePhase = eventGamePhase
+            } else {
+                curState.gamePhase = gamePhase
             }
 
             if (get(d, 'character.name')) {
@@ -234,7 +246,6 @@ export default function parseTelemetry(matchData, telemetry, focusedPlayerName) 
 
             if (d._T === 'LogGameStatePeriodic') {
                 const gs = d.gameState
-
                 curState.bluezone = {
                     ...gs.safetyZonePosition,
                     radius: gs.safetyZoneRadius,

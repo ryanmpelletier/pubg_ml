@@ -194,6 +194,7 @@ class Map extends React.Component {
                             <PlayerDot
                                 options={options}
                                 player={player}
+                                gamePhase={telemetry.gamePhase}
                                 predictions={predictions.playerPredictions[player.name]}
                                 mapSize={mapSize}
                                 pubgMapSize={pubgMapSize}

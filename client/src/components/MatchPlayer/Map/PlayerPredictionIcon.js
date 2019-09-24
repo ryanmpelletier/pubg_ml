@@ -23,13 +23,14 @@ class PlayerPredictionIcon extends React.Component {
 
     render() {
         // TODO: also pass in gamePhase
-        const { mapScale, playerPredictions } = this.props
-        const gamePhase = '1.0'
+        const { mapScale, playerPredictions, gamePhase } = this.props
+        const phase = gamePhase.toFixed(1).toString()
         let predictionObject
         if (playerPredictions) {
             for (let i = 0; i < playerPredictions.length; i++) {
                 if (playerPredictions[i]) {
-                    if (playerPredictions[i]['gamePhase'] === gamePhase) {
+                    if (playerPredictions[i]['gamePhase'] === phase ||
+                        ((Number(playerPredictions[i]['gamePhase']) + 0.5).toFixed(1).toString() === phase)) {
                         predictionObject = playerPredictions[i]
                         break
                     }

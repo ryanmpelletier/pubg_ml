@@ -29,6 +29,22 @@ export default function Telemetry(state) {
         const interval = Math.floor(msSinceEpoch / 100)
         const s = state[interval]
 
+        // sometimes gamePhase is null, I don't know why and I also don't care so here is my hack
+        let { gamePhase } = s
+        if (gamePhase == null) {
+            for (let i = interval - 1; i > 0 && gamePhase == null; i--) {
+                if (state[i].gamePhase != null) {
+                    // eslint-disable-next-line prefer-destructuring
+                    gamePhase = state[i].gamePhase
+                }
+            }
+            // if we never find a gamePhase, set it to before plane takes off
+            if (gamePhase == null) {
+                gamePhase = 0.1
+            }
+        }
+        s.gamePhase = gamePhase
+
         // Overwrite player pointer records with interpolated values. This will generate the correct value
         // for this interval and replace the pointer record with it so that a re-request of this interval
         // will not require any computation.

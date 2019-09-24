@@ -72,7 +72,7 @@ const PlayerLabel = ({ visible, player, strokeColor }) => {
     )
 }
 
-const PlayerDot = ({ options, player, pubgMapSize, mapSize, marks,
+const PlayerDot = ({ options, player, gamePhase, pubgMapSize, mapSize, marks,
     mapScale, showName, predictions }) => {
     const diameter = marks.isPlayerHovered(player.name) ? 11 : 8
     const scaledDiameter = diameter * clamp(mapScale / 1.4, 1, 1.3)
@@ -129,6 +129,7 @@ const PlayerDot = ({ options, player, pubgMapSize, mapSize, marks,
                 mapScale={mapScale}
                 playerPredictions={predictions}
                 player={player}
+                gamePhase={gamePhase}
             />
             <PlayerLabel
                 player={player}
