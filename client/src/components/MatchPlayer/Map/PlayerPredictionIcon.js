@@ -1,8 +1,7 @@
 import React from 'react'
-import { Group, Image } from 'react-konva'
-import { toScale } from '../../../lib/canvas-math.js'
+import { Image } from 'react-konva'
 import life from '../../../assets/prediction/life.png'
-import death from '../../../assets/prediction/death.png'
+import death from '../../../assets/prediction/white_death.png'
 
 class PlayerPredictionIcon extends React.Component {
     state = { lifeImage: null, deathImage: null }
@@ -45,10 +44,10 @@ class PlayerPredictionIcon extends React.Component {
             predictionObject
                 ? <Image
                     image={predictionObject.prediction ? this.state.lifeImage : this.state.deathImage}
-                    width={10 + (mapScale / 5)}
-                    height={10 + (mapScale / 5)}
-                    offsetX={12 + (mapScale / 5)}
-                    offsetY={12 + (mapScale / 5)}
+                    width={12 + (mapScale / 5)}
+                    height={12 + (mapScale / 5)}
+                    offsetX={14 + (mapScale / 5)}
+                    offsetY={14 + (mapScale / 5)}
                 />
                 : <Image visible={false} />
         )
