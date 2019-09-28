@@ -126,17 +126,17 @@ class Player extends React.Component {
                                 <p>(Matches last updated {friendlyAgo} ago)</p>
                             }
                         </PlayerHeader>
-                        <MatchesList col="1" header="Solo" baseUrl={match.url} matches={matchTypes['1']} />
-                        <MatchesList col="2" header="Duos" baseUrl={match.url} matches={matchTypes['2']} />
-                        <MatchesList col="3" header="Squad" baseUrl={match.url} matches={matchTypes['4']} />
-                        {hasCustom &&
-                            <MatchesList
-                                col="4"
-                                header="Custom"
-                                baseUrl={match.url}
-                                matches={matchTypes['c']}
-                            />
-                        }
+                        {/*<MatchesList col="1" header="Solo" baseUrl={match.url} matches={matchTypes['1']} />*/}
+                        {/*<MatchesList col="2" header="Duos" baseUrl={match.url} matches={matchTypes['2']} />*/}
+                        <MatchesList col="2" header="Squad" baseUrl={match.url} matches={matchTypes['4']} />
+                        {/*{hasCustom &&*/}
+                        {/*    <MatchesList*/}
+                        {/*        col="4"*/}
+                        {/*        header="Custom"*/}
+                        {/*        baseUrl={match.url}*/}
+                        {/*        matches={matchTypes['c']}*/}
+                        {/*    />*/}
+                        {/*}*/}
                     </MatchesContainer>
                 )}
             </Settings.Context.Consumer>
