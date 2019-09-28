@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 
 export default () =>
     <div>
-        <DocumentTitle title="About | pubgmachinelearning.com" />
+        <DocumentTitle title="pubgmachinelearning.com" />
         <Header>
             PUBG Machine Learning
         </Header>
@@ -72,14 +72,19 @@ export default () =>
                     <ul>
                         <li>X Position</li>
                         <li>Y Position</li>
+                        <li>Z Position</li>
+                        <li>Map</li>
+                        <li>Kills So Far</li>
                         <li>Number of Alive Teammates</li>
                         <li>Nearest Teammate</li>
+                        <li>Nearest Enemy</li>
                         <li>Enemy Count 0-25 Meters</li>
                         <li>Enemy Count 25-50 Meters</li>
                         <li>Enemy Count 50-100 Meters</li>
                         <li>Enemy Count 100-250 Meters</li>
                         <li>Distance To Safe Zone</li>
                         <li>Game Phase (1-8)</li>
+                        <li>Number of Alive Players</li>
                     </ul>
                 </p>
 
@@ -90,12 +95,12 @@ export default () =>
                         Next, I needed to train and save the weights of the NN so that eventually
                         I could serve up the model. For my first iteration, I used the TensorFlow Keras
                         API implementation to define my model. I defined it as a Sequential model with
-                        two Dense layers with 3 nodes and activation of RELU, and a final two dimensional
+                        two Dense layers with 10 nodes and activation of RELU, and a final two dimensional
                         Dense Softmax layer.
                     </div>
                     <div>
                         The network was trained with an Adam Optimizer and a Categorical Crossentropy
-                        loss function. I used over 60,000 peices of training data and trained with 25 epochs
+                        loss function. I used over 140,000 peices of training data and trained with 10 epochs
                         and a batch size of 50. To be completely honest, I kindof chose those at random for
                         my first iteration!
                     </div>

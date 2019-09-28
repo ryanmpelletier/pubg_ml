@@ -53,6 +53,7 @@ const Message = styled.p`
     text-align: center;
 `
 
+
 const BigLi = styled.li`
     font-size: 2rem;
     font-weight: bold;
@@ -109,7 +110,7 @@ class Player extends React.Component {
                 {({ favoritePlayers, toggleFavoritePlayer, isFavoritePlayer }) => (
                     <MatchesContainer hasCustom={hasCustom}>
                         <PlayerHeader>
-                            <DocumentTitle title={`${player.name} | pubg.sh`} />
+                            <DocumentTitle title="pubgmachinelearning.com" />
                             <PlayerName onClick={() => window.location.reload()}>
                                 {player.name}
                             </PlayerName>

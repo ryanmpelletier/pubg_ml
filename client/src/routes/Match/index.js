@@ -132,7 +132,7 @@ class Match extends React.Component {
 
         return (
             <React.Fragment>
-                <DocumentTitle title="Replay | pubg.sh" />
+                <DocumentTitle title="pubgmachinelearning.com" />
                 {content}
             </React.Fragment>
         )
