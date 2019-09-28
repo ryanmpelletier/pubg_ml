@@ -11,6 +11,7 @@ import TopMenu from './components/TopMenu.js'
 import * as Settings from './components/Settings.js'
 
 if (process.env.REACT_APP_GA) {
+    console.log('Initializing Google Analytics:', process.env.REACT_APP_GA)
     ReactGA.initialize(process.env.REACT_APP_GA)
 }
 
@@ -62,7 +63,7 @@ class Analytics extends React.Component {
     sendPageChange = (pathname, search = '') => {
         const page = pathname + search
 
-        if (process.env.NODE_ENV === 'production') {
+        if (process.env.REACT_APP_GA) {
             ReactGA.set({ page })
             ReactGA.pageview(page)
         }
