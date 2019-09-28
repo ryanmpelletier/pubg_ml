@@ -111,8 +111,8 @@ class TopMenu extends React.Component {
                             <PlayerLinks>{createPlayerLinks(favoritePlayers)}</PlayerLinks>
                         </div>
                         <RightLinks>
-                            {/*<FileUploadButton onFile={this.handleFile}>Load Saved Replay</FileUploadButton>*/}
                             <Link to="/about">About</Link>
+                            <Link to="/machine-learning">Machine Learning</Link>
                         </RightLinks>
                     </TopMenuContainer>
                 )}

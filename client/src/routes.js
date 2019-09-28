@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import ReactGA from 'react-ga'
 import Home from './routes/Home'
 import About from './routes/About'
+import MachineLearning from './routes/MachineLearning'
 import Player from './routes/Player'
 import Match from './routes/Match'
 import LocalMatch from './routes/LocalMatch'
@@ -119,6 +120,8 @@ class App extends React.Component { // eslint-disable-line
                             <Switch>
                                 <RouteWithTopMenu path="/" exact component={Home} />
                                 <RouteWithTopMenu path="/about" exact component={About} />
+                                {/* eslint-disable-next-line max-len */}
+                                <RouteWithTopMenu path="/machine-learning" exact component={MachineLearning} />
                                 <RouteWithTopMenu path="/local-replay" exact component={LocalMatch} />
                                 <RouteWithTopMenu path="/:playerName/:shardId/:matchId" component={Match} />
                                 <RouteWithTopMenu path="/:playerName/:shardId" component={Player} />
