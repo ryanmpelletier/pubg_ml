@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image } from 'react-konva'
-import life from '../../../assets/prediction/life.png'
-import death from '../../../assets/prediction/white_death.png'
+import life from '../../../assets/prediction/lightgreen_life.png'
+import death from '../../../assets/prediction/lightgreen_death.png'
 
 class PlayerPredictionIcon extends React.Component {
     state = { lifeImage: null, deathImage: null }
