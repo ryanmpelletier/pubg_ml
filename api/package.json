@@ -17,7 +17,7 @@
         "test:watch": "jest --watch"
     },
     "dependencies": {
-        "apollo-server-hapi": "1.3.6",
+        "apollo-server-hapi": "2.14.2",
         "async": "2.6.1",
         "axios": "0.18.0",
         "bluebird": "3.5.1",
