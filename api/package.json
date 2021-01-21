@@ -32,7 +32,7 @@
         "merge-graphql-schemas": "1.5.1",
         "moment": "2.22.1",
         "pgr": "0.2.0",
-        "socket.io": "2.1.1"
+        "socket.io": "2.4.0"
     },
     "devDependencies": {
         "axios-mock-adapter": "1.15.0",
