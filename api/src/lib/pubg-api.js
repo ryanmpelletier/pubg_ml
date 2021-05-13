@@ -78,6 +78,7 @@ export default {
     },
 
     async getPlayer(shardId, name) {
+	console.log('calling getPlayer');
         if (remaining === 0) {
             throw RateLimitError()
         }
@@ -99,11 +100,13 @@ export default {
     },
 
     async getMatch(id) {
+	console.log('calling getMatch');
         const res = await apiGet(`matches/${id}`)
         return res.data
     },
 
     async getMatchTelemetry(telemetryUrl) {
+	console.log('calling getMatchTelemetryUrl');
         const res = await axios.get(telemetryUrl)
         return res.data
     },

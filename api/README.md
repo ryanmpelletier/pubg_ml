@@ -11,7 +11,7 @@ This app provides a caching layer in front of the [PUBG Official API](https://do
 ### Requirements
 
 - PostgresQL
-- Node version 8+
+- Node version >=8 <=9
 - yarn
 
 ### Configuration
