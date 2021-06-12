@@ -30,7 +30,7 @@ This app provides a caching layer in front of the [PUBG Official API](https://do
 
 ### Running
 
-Simply run `yarn start` and visit http://localhost:8080/graphiql to confirm it's up.
+Simply run `yarn start` and visit http://localhost:8080/graphql to confirm it's up.
 
 ### Testing
 
