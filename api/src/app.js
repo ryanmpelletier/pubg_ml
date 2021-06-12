@@ -7,7 +7,7 @@ import { graphqlHapi, graphiqlHapi } from 'apollo-server-hapi'
 import { makeExecutableSchema } from 'graphql-tools'
 import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas'
 import depthLimit from 'graphql-depth-limit'
-import { pg, createPool, getPool, query, sql } from 'pgr'
+import { pg, createPool, query, sql } from 'pgr'
 import models from '@/models'
 import PubgApi from '@/lib/pubg-api.js'
 
@@ -62,23 +62,10 @@ async function registerGraphiql() {
     })
 }
 
-async function recreateDb() { 
+async function recreateDb() {
     const seed = sql.raw(fs.readFileSync(path.join(__dirname, '../test/seed.sql'), 'utf-8'))
     await query(sql`${seed}`)
     console.log('Recreated DB')
-}
-
-async function logTimingMetrics() {
-    const pool = await getPool('default')
-    console.log()
-    console.log(JSON.stringify(pool.metrics, null, 2))
-    console.log(JSON.stringify(PubgApi.metrics, null, 2))
-    console.log()
-}
-
-async function deleteOldMatches() {
-    // Note that this will cascade deletes through to match_players
-    await query(sql`DELETE FROM matches WHERE played_at < (TIMEZONE('utc', NOW()) - INTERVAL '14 DAY')`)
 }
 
 async function init() {
@@ -111,9 +98,6 @@ async function init() {
     await server.start()
     io = socketio(server.listener)
     console.log(`Server running at: ${server.info.uri}`)
-
-    setInterval(deleteOldMatches, 10 * 60 * 1000)
-    setInterval(logTimingMetrics, 6 * 60 * 60 * 1000)
 }
 
 process.on('SIGINT', () => {
